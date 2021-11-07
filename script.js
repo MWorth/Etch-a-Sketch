@@ -3,7 +3,7 @@ var size = 16;
 createBoard(size);
 const divs = document.querySelector('#container');
 divs.addEventListener('mouseover', (div) => {
-    mouseOver(div.target.id);
+mouseOver(div.target.id);
 });
 
 const button = document.querySelector('#reset');
@@ -13,7 +13,8 @@ button.addEventListener('click', () => {
 
 function createBoard(boardSize) {
     var elem0 = document.querySelector('#container');
-
+    removeAllChildNodes(elem0);
+    elem0.style = "grid-template-columns: repeat(" + size + ", 1fr); grid-template-rows: repeat(" + size + ", 1fr);";
     for (let i = 0; i < (boardSize * boardSize); i++) {
         let div = document.createElement("div");
         div.id = "div-" + i;
@@ -35,4 +36,10 @@ function resetBoard() {
     }
     size = window.prompt("What size grid would you like?", "16")
     createBoard(size);
+}
+
+function removeAllChildNodes(parent) {
+    while (parent.firstChild) {
+        parent.removeChild(parent.firstChild);
+    }
 }
