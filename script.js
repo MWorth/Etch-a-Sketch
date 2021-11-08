@@ -5,9 +5,20 @@ const divs = document.querySelector('#container');
 divs.addEventListener('mouseover', (div) => {
 mouseOver(div.target.id);
 });
-
-const button = document.querySelector('#reset');
-button.addEventListener('click', () => {
+const btnBlack = document.querySelector('#black');
+btnBlack.addEventListener('click', () => {
+    colour = "black";
+});
+const btnGreyscale = document.querySelector('#greyscale');
+btnGreyscale.addEventListener('click', () => {
+    colour = "greyscale";
+});
+const btnRandom = document.querySelector('#random');
+btnRandom.addEventListener('click', () => {
+    colour = "random";
+});
+const btnReset = document.querySelector('#reset');
+btnReset.addEventListener('click', () => {
     resetBoard();
 });
 
@@ -25,7 +36,26 @@ function createBoard(boardSize) {
 }
 
 function mouseOver(ID) {
-    document.getElementById(ID).style.backgroundColor = colour;
+    if (colour == "black") {
+        document.getElementById(ID).style.backgroundColor = "black";
+        document.getElementById(ID).style.opacity = 1;
+    } else if (colour == "greyscale") {
+        let pixel = document.getElementById(ID)
+        pixel.style.backgroundColor = "black";
+        console.log(pixel.style.opacity);
+        if (parseFloat(pixel.style.opacity)) {
+            pixel.style.opacity = parseFloat(pixel.style.opacity) + 0.1;
+        } else {
+            pixel.style.opacity = 0.1;
+            }
+    } else if (colour == "random") {
+        let a = Math.random() * 255;
+        let b = Math.random() * 255;
+        let c = Math.random() * 255;
+        document.getElementById(ID).style.backgroundColor = "rgb(" + a + ", " + b + ", " + c + ")";
+    } else {
+        window.alert("Error - Colour set incorrectly");
+    }
   }
 
 function resetBoard() {
@@ -34,7 +64,10 @@ function resetBoard() {
     for (let i = 0; i < length; i++) {
         divs[i].style.removeProperty("background-color");
     }
-    size = window.prompt("What size grid would you like?", "16")
+    size = window.prompt("What size grid would you like?", "16");
+    if (size > 100) {
+        window.prompt("What size grid would you like? (Must be under 100 x 100)", "16");
+    }
     createBoard(size);
 }
 
